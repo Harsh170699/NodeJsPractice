@@ -1,4 +1,3 @@
-const http = require('http');
 const express = require('express');
 
 const app = express();
@@ -13,9 +12,8 @@ app.get('/about', (req, res) => {
     return res.send('Hello from About page' + ' hey ' + req.query.name + ' you are ' + req.query.age);
 });
 
+app.get('/profile', (req, res) => {
+    return res.send('Hello from Profile page');
+});
+
 app.listen(8000, () => console.log('Server Started!'));
-
-// Express is just a framework, internally it uses HTTP module only
-// const myServer = http.createServer(app);
-
-// myServer.listen(8000, () => console.log('Server Started!'));
