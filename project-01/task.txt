@@ -1,0 +1,16 @@
+REST API - Support JSON data
+
+GET /users - HTML Document Render
+GET /api/users - List all users
+
+GET /api/users/1 - Get the user with ID 1
+GET /api/users/2 - Get the user with ID 2
+To get specific user data, use :id parameter. This is called Dynamic Path parameter
+
+POST /api/users - Create a new user
+
+PATCH /api/users/1 - Edit the user with id 1
+
+DELETE /api/users/1 - Delete the user with id 1
+
+https://mockaroo.com/ - Generates fake data for testing purposes
