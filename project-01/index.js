@@ -6,7 +6,16 @@ const app = express();
 const PORT = 8000;
 
 // It is a plugin (Middleware) - Whenever will get form data, this will enter it into req.body
+// This middleware will run first as it is defined before other routes.
+// For this middleware, next is the below app.use which is defined
 app.use(express.urlencoded({ extended: false }));
+
+// Creating Middleware using app.use
+// This middleware will be called after the above middleware
+app.use((req, res, next) => {
+    console.log("Middleware called");
+    next();
+})
 
 // ROUTES
 // List all users
