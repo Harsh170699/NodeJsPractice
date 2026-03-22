@@ -14,20 +14,18 @@ app.use(express.urlencoded({ extended: false }));
 // Creating Middleware using app.use
 // This middleware will be called after the above middleware
 app.use((req, res, next) => {
-    console.log("First Middleware called");
-    req.myUserName = 'Harsh Shah'
-    next();
-})
-
-app.use((req, res, next) => {
-    console.log("Second Middleware called", req.myUserName);
-    next();
+    fs.appendFile('log.txt', `${Date.now()}: ${req.method}: ${req.path}\n`, (err, data) => {
+        if (err) {
+            console.error('Error writing to log file:', err);
+        } else {
+            next();
+        }
+    });
 })
 
 // ROUTES
 // List all users
 app.get('/api/users', (req, res) => {
-    console.log('I am in get route: ', req.myUserName);
     return res.json(users);
 })
 
