@@ -1,8 +1,12 @@
 const express = require('express');
 const users = require('./MOCK_DATA.json');
+const fs = require('fs');
 
 const app = express();
 const PORT = 8000;
+
+// It is a plugin (Middleware) - Whenever will get form data, this will enter it into req.body
+app.use(express.urlencoded({ extended: false }));
 
 // ROUTES
 // List all users
@@ -27,18 +31,34 @@ app.route('/api/users/:id').get((req, res) => {
     return res.json(user);
 })
     .patch((req, res) => {
-        // Edit user with id
-        return res.json({ status: 'pending' });
+        // Update the user using id
+        const id = Number(req.params.id);
+        const user = users.find(user => user.id === id);
+        // Update user with new data
+        Object.assign(user, req.body);
+        fs.writeFile('./MOCK_DATA.json', JSON.stringify(users), (err, data) => {
+            return res.json({status: 'success', id: users.length});
+        });
     })
     .delete((req, res) => {
         // Delete user with id
-        return res.json({ status: 'pending' });
+        const id = Number(req.params.id);
+        const user = users.find(user => user.id === id);
+        users.splice(users.indexOf(user), 1);
+        fs.writeFile('./MOCK_DATA.json', JSON.stringify(users), (err, data) => {
+            return res.json({status: 'success', id: users.length});
+        });
     })
 
 // Create new User
 app.post('/api/users', (req, res) => {
     // TODO: Create new user
-    return res.json({ status: 'pending' });
+    const body = req.body;
+    console.log("body: ", body);
+    users.push({...body, id: users.length + 1});
+    fs.writeFile('./MOCK_DATA.json', JSON.stringify(users), (err, data) => {
+        return res.json({status: 'success', id: users.length});
+    });
 })
 
 app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
