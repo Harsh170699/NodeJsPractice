@@ -26,6 +26,8 @@ app.use((req, res, next) => {
 // ROUTES
 // List all users
 app.get('/api/users', (req, res) => {
+    console.log(req.headers)
+    res.setHeader('myName', 'Harsh');
     return res.json(users);
 })
 
