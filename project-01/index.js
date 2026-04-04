@@ -1,9 +1,30 @@
 const express = require('express');
 const users = require('./MOCK_DATA.json');
 const fs = require('fs');
+const mongoose = require('mongoose');
 
 const app = express();
 const PORT = 8000;
+
+// Connection
+// mongodb://127.0.0.1:27017/youtube-app-1 - Local MongoDB connection string
+mongoose.connect('mongodb://127.0.0.1:27017/youtube-app-1')
+.then(() => console.log('MongoDB Connected'))
+.catch((err) => console.log('MongoDB Connection Error:', err));
+
+// Schema
+// required - mandatory field
+// unique - no duplicate values
+const userSchema = new mongoose.Schema({
+    first_name: { type: String, required: true },
+    last_name: { type: String, required: true },
+    email: { type: String, required: true, unique: true },
+    gender: { type: String },
+    job_title: { type: String, required: false }
+});
+
+// Created a Model
+const User = mongoose.model('user', userSchema);
 
 // It is a plugin (Middleware) - Whenever will get form data, this will enter it into req.body
 // This middleware will run first as it is defined before other routes.

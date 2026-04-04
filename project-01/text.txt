@@ -1,0 +1,14 @@
+Schema - Define the structure of the data
+    Schema - Model
+    Using model we can do CRUD operations
+
+For eg: below is my structure
+{
+    "id": 1,
+    "first_name": "John",
+    "last_name": "Doe",
+    "email": "john.doe@example.com",
+    "gender": "Male",
+    "ip_address": "192.168.1.1"
+}
+then we create a model using schema
